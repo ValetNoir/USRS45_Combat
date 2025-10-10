@@ -13,6 +13,8 @@ namespace USRS45_Combat
 
         static void Main(string[] args)
         {
+            // Welcome header
+
             Console.WriteLine("+--------------------------------+");
             Console.WriteLine("| Really Fantastic Fighting Game |");
             Console.WriteLine("+--------------------------------+");
@@ -50,15 +52,26 @@ namespace USRS45_Combat
 
             // Main loop
 
+            int mancheCounter = 1;
             while(false) // true
             {
                 Console.WriteLine("+------------+");
-                Console.WriteLine("| Manche [{0}] |");
+                Console.WriteLine("| Manche [{0}] |", mancheCounter);
                 Console.WriteLine("+------------+");
                 Console.WriteLine("");
-                Console.WriteLine("YOU ({0}) : {1}");
-                // pas fini
+                Console.WriteLine("[{1}pv] {0} (you)", playerCharacter.type[0], playerCharacter.Health);
+                Console.WriteLine("[{1}pv] {0} (IA)", aiCharacter.type[0], aiCharacter.Health);
+                Console.WriteLine("");
+                Console.WriteLine("Actions possibles :");
+                Console.WriteLine("1 - Attaquer");
+                Console.WriteLine("2 - Défendre");
+                Console.WriteLine("3 - Action spéciale");
+                Console.WriteLine("Choix");
+
+                // Code mattéo ici
             }
+
+
         }
 
         static Character createCharacter(int type)
