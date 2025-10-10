@@ -42,13 +42,13 @@ namespace USRS45_Combat
             playerCharacter = createCharacter(choice);
 
             Console.WriteLine("");
-            Console.WriteLine("Tu as choisi de jouer un {0}.", playerCharacter.type);
+            Console.WriteLine("Tu as choisi de jouer un {0}.", playerCharacter.Nom);
 
             // AI character choice
 
             aiCharacter = createCharacter(random.Next(1, 4));
 
-            Console.WriteLine("Tu vas affronter un {0} joué par une IA.", aiCharacter.type);
+            Console.WriteLine("Tu vas affronter un {0} joué par une IA.", aiCharacter.Nom);
 
             // Main loop
 
@@ -59,8 +59,8 @@ namespace USRS45_Combat
                 Console.WriteLine("| Manche [{0}] |", mancheCounter);
                 Console.WriteLine("+------------+");
                 Console.WriteLine("");
-                Console.WriteLine("[{1}pv] {0} (you)", playerCharacter.type[0], playerCharacter.Health);
-                Console.WriteLine("[{1}pv] {0} (IA)", aiCharacter.type[0], aiCharacter.Health);
+                Console.WriteLine("[{1}pv] {0} (you)", playerCharacter.Nom[0], playerCharacter.Health);
+                Console.WriteLine("[{1}pv] {0} (IA)", aiCharacter.Nom[0], aiCharacter.Health);
                 Console.WriteLine("");
                 Console.WriteLine("Actions possibles :");
                 Console.WriteLine("1 - Attaquer");
@@ -85,7 +85,10 @@ namespace USRS45_Combat
                 case 3:
                     return new Tank();
                 case 4:
-                    return new Custom();
+                    return new Tank();
+                //return new Custom();
+                default:
+                    return new Tank();
             }
         }
     }

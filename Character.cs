@@ -36,6 +36,7 @@ namespace USRS45_Combat
 
         public void Reset()
         {
+            DamageTaken = 0;
             IsParry = false;
         }
     }
