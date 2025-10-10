@@ -14,7 +14,7 @@ namespace USRS45_Combat
             Damage = 1;
             Nom = "Healer";
         }
-        public void Special()
+        public override void Special(Character target)
         {
             Health++;
         }

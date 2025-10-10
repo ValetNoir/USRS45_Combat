@@ -15,7 +15,7 @@ namespace USRS45_Combat
             Nom = "Tank";
         }
 
-        public void Special(Character target)
+        public override void Special(Character target)
         {
             Health--;
             target.TakeDamage(Damage + 1);

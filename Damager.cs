@@ -15,7 +15,7 @@ namespace USRS45_Combat
             Nom = "Damager";
         }
 
-        public void Special(Character target)
+        public override void Special(Character target)
         {
             target.TakeDamage(DamageTaken);
         }
