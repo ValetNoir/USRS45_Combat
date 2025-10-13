@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace USRS45_Combat
 {
@@ -19,33 +20,35 @@ namespace USRS45_Combat
 
         public void Parry()
         {
-            Console.WriteLine($"{this.Nom} is parrying.");
+            Console.WriteLine($"{this.Nom} se défend.");
             IsParry = true;
         }
 
         public void TakeDamage(int damage)
         {
-            if (IsParry)
-                return;
-
-            DamageTaken = damage;
-            Health -= damage;
-            Console.WriteLine($"{this.Nom} took {damage} damages.");
-            if (Health <= 0)
-            {
-                IsDead = true;
-                Health = 0;
-                Console.WriteLine($"{this.Nom} is dead.");
-            }
+            DamageTaken += damage;
         }
 
         public virtual void Special(Character target)
         {
-            Console.WriteLine($"{this.Nom} is doing his special attack!");
+            Console.WriteLine($"{this.Nom} fait son attaque spéciale !");
         }
 
-        public void Reset()
+        public void EndOfTurn()
         {
+            if (!IsParry && DamageTaken > 0)
+            {
+                Health -= DamageTaken;
+                Console.WriteLine($"{this.Nom} a pris {DamageTaken} dégats.");
+            }
+
+            if (Health <= 0)
+            {
+                IsDead = true;
+                Health = 0;
+                Console.WriteLine($"{this.Nom} est mort.");
+            }
+
             DamageTaken = 0;
             IsParry = false;
         }

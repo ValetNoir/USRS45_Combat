@@ -17,7 +17,9 @@ namespace USRS45_Combat
         public override void Special(Character target)
         {
             base.Special(target);
-            Health++;
+
+            Health += 2;
+            Console.WriteLine($"{this.Nom} s'est soigné 2 PV.");
         }
     }
 }

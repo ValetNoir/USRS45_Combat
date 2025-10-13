@@ -153,8 +153,8 @@ namespace USRS45_Combat
 
                 // Fin de tour
 
-                aiCharacter.Reset();
-                playerCharacter.Reset();
+                aiCharacter.EndOfTurn();
+                playerCharacter.EndOfTurn();
             }
 
 
