@@ -11,7 +11,7 @@ namespace USRS45_Combat
         static Character playerCharacter;
         static Character aiCharacter;
         static Random random = new Random();
-        static string[] choixPossibles = { "a", "d", "s" };
+        static string[] choixPossibles = { "d", "a", "s" };
 
         static void Main(string[] args)
         {
@@ -121,10 +121,10 @@ namespace USRS45_Combat
                     int index = random.Next(0, 3);
                     choixActionOrdi = choixPossibles[index];
                 }
-                else
+                else // ordi offensif
                 {
-                    // mettre IA dure ici
-                    choixActionOrdi = "s";
+                    int index = random.Next(1, 3);
+                    choixActionOrdi = choixPossibles[index];
                 }
 
                 Write($"L'IA a choisi : {choixActionOrdi}.");
@@ -145,15 +145,15 @@ namespace USRS45_Combat
 
                 // Gestion des spécials
 
-                // All damages first, for the damager special
-                if (choixActionOrdi == "s" && aiCharacter is Tank)
+                if (choixActionOrdi == "s" && !(aiCharacter is Damager) )
                     aiCharacter.Special(playerCharacter);
-                if (choixActionJoueur == "s" && playerCharacter is Tank)
+                if (choixActionJoueur == "s" && !(playerCharacter is Damager))
                     playerCharacter.Special(aiCharacter);
 
-                if (choixActionOrdi == "s" && !(aiCharacter is Tank) )
+                // Damager go last
+                if (choixActionOrdi == "s" && aiCharacter is Damager)
                     aiCharacter.Special(playerCharacter);
-                if (choixActionJoueur == "s" && !(playerCharacter is Tank))
+                if (choixActionJoueur == "s" && playerCharacter is Damager)
                     playerCharacter.Special(aiCharacter);
 
                 // Fin de tour
