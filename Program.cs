@@ -35,7 +35,7 @@ namespace USRS45_Combat
             while(true)
             {
                 if (int.TryParse(Console.ReadLine(), out choice))
-                    if(choice >= 1 || choice <= 4)
+                    if(choice >= 1 && choice <= 4)
                         break;
                 Console.WriteLine("Réponse invalide, veuillez réessayer:");
             }
