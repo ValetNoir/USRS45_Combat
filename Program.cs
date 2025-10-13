@@ -51,7 +51,7 @@ namespace USRS45_Combat
             Write("1 - Damager");
             Write("2 - Healer");
             Write("3 - Tank");
-            Write("4 - ???");
+            Write("4 - Vampire");
             Console.Write("Choix : ");
 
             int choice;
@@ -166,7 +166,7 @@ namespace USRS45_Combat
 
                 Write("");
 
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(500);
             }
 
             Write($"[{playerCharacter.Health}pv] {playerCharacter.Nom[0]} (you)");
@@ -197,8 +197,7 @@ namespace USRS45_Combat
                 case 3:
                     return new Tank();
                 case 4:
-                    return new Tank();
-                    // return new Custom();
+                    return new Vampire();
                 default:
                     return new Tank();
             }

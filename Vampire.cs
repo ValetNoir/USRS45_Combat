@@ -13,7 +13,7 @@ namespace USRS45_Combat
         {
             Health = 2;
             Damage = 2;
-            Nom = "skibidiVampire";
+            Nom = "Vampire";
         }
 
         public override void Special(Character target)
