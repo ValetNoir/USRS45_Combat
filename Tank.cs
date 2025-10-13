@@ -17,6 +17,7 @@ namespace USRS45_Combat
 
         public override void Special(Character target)
         {
+            base.Special(target);
             Health--;
             target.TakeDamage(Damage + 1);
         }

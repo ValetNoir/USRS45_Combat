@@ -19,19 +19,26 @@ namespace USRS45_Combat
 
         public void Parry()
         {
+            Console.WriteLine($"{this.Nom} is parrying.");
             IsParry = true;
         }
 
         public void TakeDamage(int damage)
         {
-            DamageTaken = damage;
+            DamageTaken += damage;
             Health -= damage;
+            Console.WriteLine($"{this.Nom} took {damage} damages.");
             if (Health <= 0)
+            {
                 IsDead = true;
+                Health = 0;
+                Console.WriteLine($"{this.Nom} is dead.");
+            }
         }
 
         public virtual void Special(Character target)
         {
+            Console.WriteLine($"{this.Nom} is doing his special attack!");
         }
 
         public void Reset()
