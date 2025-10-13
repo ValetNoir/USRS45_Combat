@@ -34,6 +34,12 @@ namespace USRS45_Combat
             Console.WriteLine($"{this.Nom} fait son attaque spéciale !");
         }
 
+        public void Reset()
+        {
+            DamageTaken = 0;
+            IsParry = false;
+        }
+
         public void EndOfTurn()
         {
             if (!IsParry && DamageTaken > 0)
@@ -48,9 +54,6 @@ namespace USRS45_Combat
                 Health = 0;
                 Console.WriteLine($"{this.Nom} est mort.");
             }
-
-            DamageTaken = 0;
-            IsParry = false;
         }
     }
 }
