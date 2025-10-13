@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace USRS45_Combat
 {
@@ -18,10 +19,10 @@ namespace USRS45_Combat
 
             Console.WriteLine("+--------------------------------+");
             Console.WriteLine("| Really Fantastic Fighting Game |");
-            Console.WriteLine("+--------------------------------+");
-            Console.WriteLine("");
-            Console.WriteLine("Bienvenue dans l'arène !");
-            Console.WriteLine("");
+            Write("+--------------------------------+");
+            Write("");
+            Write("Bienvenue dans l'arène !");
+            Write("");
 
             // Difficulty choice
 
@@ -30,25 +31,27 @@ namespace USRS45_Combat
             string choixDif = "";
 
 
-            Console.WriteLine("Voulez-vous jouer en mode difficile ('o' pour accepter, autre pour refuser)?");
+            Write("Voulez-vous jouer en mode difficile ('o' pour accepter, autre pour refuser)?");
             choixDif = Console.ReadLine();
             if (choixDif == "o")
             {
-                Console.WriteLine("Mode difficile activé.");
+                Write("Mode difficile activé.");
                 modeDifficile = true;
             }
             else
             {
-                Console.WriteLine("Mode facile activé.");
+                Write("Mode facile activé.");
             }
+
+            Write("");
 
             // Player character choice
 
-            Console.WriteLine("Catégories de personnage disponibles :");
-            Console.WriteLine("1 - Damager");
-            Console.WriteLine("2 - Healer");
-            Console.WriteLine("3 - Tank");
-            Console.WriteLine("4 - ???");
+            Write("Catégories de personnage disponibles :");
+            Write("1 - Damager");
+            Write("2 - Healer");
+            Write("3 - Tank");
+            Write("4 - ???");
             Console.Write("Choix : ");
 
             int choice;
@@ -57,19 +60,21 @@ namespace USRS45_Combat
                 if (int.TryParse(Console.ReadLine(), out choice))
                     if(choice >= 1 && choice <= 4)
                         break;
-                Console.WriteLine("Réponse invalide, veuillez réessayer:");
+                Write("Réponse invalide, veuillez réessayer:");
             }
             playerCharacter = createCharacter(choice);
 
-            Console.WriteLine("");
-            Console.WriteLine("Tu as choisi de jouer un {0}.", playerCharacter.Nom);
+            Write("");
+
+            Write($"Tu as choisi de jouer un {playerCharacter.Nom}.");
 
             // AI character choice
 
-            //aiCharacter = createCharacter(random.Next(1, 4));
-            aiCharacter = createCharacter(3);
+            aiCharacter = createCharacter(random.Next(1, 5));
 
-            Console.WriteLine("Tu vas affronter un {0} joué par une IA.", aiCharacter.Nom);
+            Write($"Tu vas affronter un {aiCharacter.Nom} joué par une IA.");
+            
+            Write("");
 
             // Main loop
 
@@ -77,20 +82,20 @@ namespace USRS45_Combat
             while(!playerCharacter.IsDead && !aiCharacter.IsDead)
             {
                 Console.WriteLine("+------------+");
-                Console.WriteLine("| Manche [{0}] |", mancheCounter);
-                Console.WriteLine("+------------+");
+                Console.WriteLine($"| Manche [{mancheCounter}] |");
+                Write("+------------+");
 
-                Console.WriteLine("");
+                Write("");
 
-                Console.WriteLine("[{1}pv] {0} (you)", playerCharacter.Nom[0], playerCharacter.Health);
-                Console.WriteLine("[{1}pv] {0} (IA)", aiCharacter.Nom[0], aiCharacter.Health);
+                Write($"[{playerCharacter.Health}pv] {playerCharacter.Nom[0]} (you)");
+                Write($"[{aiCharacter.Health}pv] {aiCharacter.Nom[0]} (IA)");
 
-                Console.WriteLine("");
+                Write("");
 
-                Console.WriteLine("Quelle action voulez vous faire ?");
-                Console.WriteLine("Attaquer (a)");
-                Console.WriteLine("Defendre (d)");
-                Console.WriteLine("Spécial (s)");
+                Write("Quelle action voulez vous faire ?");
+                Write("Attaquer (a)");
+                Write("Defendre (d)");
+                Write("Spécial (s)");
                 Console.Write("Choix : ");
 
 
@@ -103,27 +108,27 @@ namespace USRS45_Combat
 
                     if (choixPossibles.Contains(choixActionJoueur))
                         break;
-                    Console.WriteLine("Choix invalide. Essayez encore.");
+                    Write("Choix invalide. Essayez encore.");
                 }
 
-                Console.WriteLine("");
+                Write("");
 
                 // AI choice
 
-                string choixActionOrdi = "";
-
+                string choixActionOrdi;
                 if (!modeDifficile) //ordi en mode random
                 {
-                    int index = random.Next(2);
+                    int index = random.Next(0, 3);
                     choixActionOrdi = choixPossibles[index];
                 }
                 else
                 {
+                    // mettre IA dure ici
                     choixActionOrdi = "s";
                 }
 
-                Console.WriteLine($"L'IA a choisi : {choixActionOrdi}.");
-                Console.WriteLine("");
+                Write($"L'IA a choisi : {choixActionOrdi}.");
+                Write("");
 
                 // Action resolution
                 // Order : défense -> attaque -> spécial
@@ -155,9 +160,30 @@ namespace USRS45_Combat
 
                 aiCharacter.EndOfTurn();
                 playerCharacter.EndOfTurn();
+
+                aiCharacter.Reset();
+                playerCharacter.Reset();
+
+                Write("");
+
+                System.Threading.Thread.Sleep(1000);
             }
 
+            Write($"[{playerCharacter.Health}pv] {playerCharacter.Nom[0]} (you)");
+            Write($"[{aiCharacter.Health}pv] {aiCharacter.Nom[0]} (IA)");
 
+            if (playerCharacter.IsDead && aiCharacter.IsDead)
+                Write("Les deux adversaires se sont tués en même temps ! Égalité.");
+            else if (playerCharacter.IsDead)
+                Write("Vous avez perdu...");
+            else if (aiCharacter.IsDead)
+                Write("Vous avez gagné !!!!");
+        }
+
+        public static void Write(string message)
+        {
+            Console.WriteLine(message);
+            System.Threading.Thread.Sleep(100);
         }
 
         static Character createCharacter(int type)

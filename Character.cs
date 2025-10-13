@@ -20,7 +20,7 @@ namespace USRS45_Combat
 
         public void Parry()
         {
-            Console.WriteLine($"{this.Nom} se défend.");
+            Write($"{this.Nom} se défend.");
             IsParry = true;
         }
 
@@ -31,7 +31,7 @@ namespace USRS45_Combat
 
         public virtual void Special(Character target)
         {
-            Console.WriteLine($"{this.Nom} fait son attaque spéciale !");
+            Write($"{this.Nom} fait son attaque spéciale !");
         }
 
         public void Reset()
@@ -45,15 +45,21 @@ namespace USRS45_Combat
             if (!IsParry && DamageTaken > 0)
             {
                 Health -= DamageTaken;
-                Console.WriteLine($"{this.Nom} a pris {DamageTaken} dégats.");
+                Write($"{this.Nom} a pris {DamageTaken} dégats.");
             }
 
             if (Health <= 0)
             {
                 IsDead = true;
                 Health = 0;
-                Console.WriteLine($"{this.Nom} est mort.");
+                Write($"{this.Nom} est mort.");
             }
+        }
+
+        public static void Write(string message)
+        {
+            Console.WriteLine(message);
+            System.Threading.Thread.Sleep(250);
         }
     }
 }

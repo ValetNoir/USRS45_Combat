@@ -19,7 +19,7 @@ namespace USRS45_Combat
             base.Special(target);
 
             Health += 2;
-            Console.WriteLine($"{this.Nom} s'est soigné 2 PV.");
+            Write($"{this.Nom} s'est soigné 2 PV.");
         }
     }
 }
