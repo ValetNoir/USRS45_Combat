@@ -10,6 +10,7 @@ namespace USRS45_Combat
         static Character playerCharacter;
         static Character aiCharacter;
         static Random random = new Random();
+        static string[] choixPossibles = { "a", "d", "s" };
 
         static void Main(string[] args)
         {
@@ -25,18 +26,20 @@ namespace USRS45_Combat
             // Difficulty choice
 
             bool finPartie = false;
-            string choixAction = "";
-            string choixOrdi = "";
-            bool choixValide = false;
             bool modeDifficile = false;
             string choixDif = "";
 
 
-            Console.WriteLine("Le jeu est en mode facile. Voulez-vous jouer en mode difficile (d pour accepter, autre pour refuser)? ");
+            Console.WriteLine("Voulez-vous jouer en mode difficile ('o' pour accepter, autre pour refuser)?");
             choixDif = Console.ReadLine();
-            if (choixDif == "d")
+            if (choixDif == "o")
             {
+                Console.WriteLine("Mode difficile activé.");
                 modeDifficile = true;
+            }
+            else
+            {
+                Console.WriteLine("Mode facile activé.");
             }
 
             // Player character choice
@@ -46,7 +49,7 @@ namespace USRS45_Combat
             Console.WriteLine("2 - Healer");
             Console.WriteLine("3 - Tank");
             Console.WriteLine("4 - ???");
-            Console.WriteLine("Choix :");
+            Console.Write("Choix : ");
 
             int choice;
             while(true)
@@ -63,74 +66,95 @@ namespace USRS45_Combat
 
             // AI character choice
 
-            aiCharacter = createCharacter(random.Next(1, 4));
+            //aiCharacter = createCharacter(random.Next(1, 4));
+            aiCharacter = createCharacter(3);
 
             Console.WriteLine("Tu vas affronter un {0} joué par une IA.", aiCharacter.Nom);
 
             // Main loop
 
             int mancheCounter = 1;
-            while(finPartie == false) // true
+            while(!playerCharacter.IsDead && !aiCharacter.IsDead)
             {
                 Console.WriteLine("+------------+");
                 Console.WriteLine("| Manche [{0}] |", mancheCounter);
                 Console.WriteLine("+------------+");
+
                 Console.WriteLine("");
+
                 Console.WriteLine("[{1}pv] {0} (you)", playerCharacter.Nom[0], playerCharacter.Health);
                 Console.WriteLine("[{1}pv] {0} (IA)", aiCharacter.Nom[0], aiCharacter.Health);
-                Console.WriteLine("");
-                Console.WriteLine("Actions possibles :");
-                Console.WriteLine("1 - Attaquer");
-                Console.WriteLine("2 - Défendre");
-                Console.WriteLine("3 - Action spéciale");
-                Console.WriteLine("Choix");
 
-                Console.WriteLine("Quelle Action voulez vous faire");
+                Console.WriteLine("");
+
+                Console.WriteLine("Quelle action voulez vous faire ?");
                 Console.WriteLine("Attaquer (a)");
                 Console.WriteLine("Defendre (d)");
                 Console.WriteLine("Spécial (s)");
+                Console.Write("Choix : ");
 
-                choixValide = false;
-                while (!choixValide)
+
+                // Player choice
+
+                string choixActionJoueur = "";
+                while (true)
                 {
-                    choixAction = Console.ReadLine();
+                    choixActionJoueur = Console.ReadLine();
 
-                    if (choixAction == "a")
-                    {
-                        TakeDamage(Joueur.Damage);
-                        choixValide = true;
-                    }
-                    else if (choixAction == "d")
-                    {
-
-                        choixValide = true;
-                    }
-                    else if (choixAction == "s")
-                    {
-
-                        choixValide = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Choix invalide. Essayez encore.");
-                    }
+                    if (choixPossibles.Contains(choixActionJoueur))
+                        break;
+                    Console.WriteLine("Choix invalide. Essayez encore.");
                 }
 
-                if (!modeDifficile)
+                Console.WriteLine("");
+
+                // AI choice
+
+                string choixActionOrdi = "";
+
+                if (!modeDifficile) //ordi en mode random
                 {
-                    //ordi en mode random
-                    string[] difchoix = { "a", "d", "s" };
-                    Random rnd = new Random();
-                    int index = rnd.Next(2);
-                    choixOrdi = difchoix[index];
+                    int index = random.Next(2);
+                    choixActionOrdi = choixPossibles[index];
                 }
                 else
                 {
-
+                    choixActionOrdi = "s";
                 }
 
+                Console.WriteLine($"L'IA a choisi : {choixActionOrdi}.");
+                Console.WriteLine("");
 
+                // Action resolution
+                // Order : défense -> attaque -> spécial
 
+                if (choixActionOrdi == "d")
+                    aiCharacter.Parry();
+                if (choixActionJoueur == "d")
+                    playerCharacter.Parry();
+
+                if (choixActionOrdi == "a")
+                    playerCharacter.TakeDamage(aiCharacter.Damage);
+                if (choixActionJoueur == "a")
+                    aiCharacter.TakeDamage(playerCharacter.Damage);
+
+                // Gestion des spécials
+
+                // All damages first, for the damager special
+                if (choixActionOrdi == "s" && aiCharacter is Tank)
+                    aiCharacter.Special(playerCharacter);
+                if (choixActionJoueur == "s" && playerCharacter is Tank)
+                    playerCharacter.Special(aiCharacter);
+
+                if (choixActionOrdi == "s" && !(aiCharacter is Tank) )
+                    aiCharacter.Special(playerCharacter);
+                if (choixActionJoueur == "s" && !(playerCharacter is Tank))
+                    playerCharacter.Special(aiCharacter);
+
+                // Fin de tour
+
+                aiCharacter.Reset();
+                playerCharacter.Reset();
             }
 
 
@@ -148,7 +172,7 @@ namespace USRS45_Combat
                     return new Tank();
                 case 4:
                     return new Tank();
-                //return new Custom();
+                    // return new Custom();
                 default:
                     return new Tank();
             }

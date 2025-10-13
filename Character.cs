@@ -24,6 +24,9 @@ namespace USRS45_Combat
 
         public void TakeDamage(int damage)
         {
+            if (IsParry)
+                return;
+
             DamageTaken = damage;
             Health -= damage;
             if (Health <= 0)
