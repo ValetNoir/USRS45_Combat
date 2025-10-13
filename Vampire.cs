@@ -12,7 +12,7 @@ namespace USRS45_Combat
         public Vampire()
         {
             Health = 2;
-            Damage = 1;
+            Damage = 2;
             Nom = "skibidiVampire";
         }
 
