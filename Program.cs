@@ -178,6 +178,8 @@ namespace USRS45_Combat
                 Write("Vous avez perdu...");
             else if (aiCharacter.IsDead)
                 Write("Vous avez gagné !!!!");
+
+            Console.ReadLine(); // Empêche le terminal de se fermer
         }
 
         public static void Write(string message)
