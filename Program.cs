@@ -188,6 +188,7 @@ namespace USRS45_Combat
 
         static Character createCharacter(int type)
         {
+            // Could be an enum
             switch (type)
             {
                 case 1:
