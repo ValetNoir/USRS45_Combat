@@ -12,14 +12,14 @@ namespace USRS45_Combat
         {
             Health = 4;
             Damage = 1;
-            Nom = "Healer";
+            Name = "Healer";
         }
         public override void Special(Character target)
         {
             base.Special(target);
 
             Health += 2;
-            Write($"{this.Nom} s'est soigné 2 PV.");
+            USRS45_Combat.WriteLineWithDelay($"{this.Name} s'est soigné 2 PV.");
         }
     }
 }

@@ -12,7 +12,7 @@ namespace USRS45_Combat
         {
             Health = 5;
             Damage = 1;
-            Nom = "Tank";
+            Name = "Tank";
         }
 
         public override void Special(Character target)

@@ -13,7 +13,7 @@ namespace USRS45_Combat
         {
             Health = 2;
             Damage = 2;
-            Nom = "Vampire";
+            Name = "Vampire";
         }
 
         public override void Special(Character target)
@@ -21,7 +21,7 @@ namespace USRS45_Combat
             base.Special(target);
             Health++;
             target.TakeDamage(1);
-            Console.WriteLine($"{this.Nom} a volé une vie de {target.Nom}.");
+            USRS45_Combat.WriteLineWithDelay($"{this.Name} a volé une vie de {target.Name}.");
         }
     }
 }
