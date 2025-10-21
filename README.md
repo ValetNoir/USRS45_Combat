@@ -18,3 +18,9 @@ ou
 ## Comment jouer
 
 Une fois sur le terminal, suivre les instructions dans le programme.
+
+## Crédits
+
+- Elliot Nedellec
+- Valkora
+- valet_noir
