@@ -10,7 +10,7 @@ namespace USRS45_Combat
     public class Character
     {
         public int Health;
-        public  int Damage;
+        public int Damage;
         public string Name;
 
         public int DamageTaken;
